@@ -26,11 +26,15 @@ public class VolumeControler : MonoBehaviour
     private void OnDisable()
     {
         PlayerPrefs.SetFloat(_volumeParameter, _volumeValue);
+
+        _volumeSlider.onValueChanged.RemoveListener(HandleSliderValueChanged);
     }
 
     private void HandleSliderValueChanged(float value)
     {
         _volumeValue = Mathf.Log10(value) * _multiplier;
         _mixer.SetFloat(_volumeParameter, _volumeValue);
+
+        PlayerPrefs.SetFloat(_volumeParameter, _volumeValue);
     }
 }
